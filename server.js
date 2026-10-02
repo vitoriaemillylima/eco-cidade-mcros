@@ -133,13 +133,15 @@ app.post('/api/webhook', async (req, res) => {
 });
 
 
+// Rota para o painel admin listar todos os inscritos do Neon DB
 app.get('/api/alunos', async (req, res) => {
-    try {
-        const result = await db.query('SELECT * FROM alunos ORDER BY data_inscricao DESC');
-        res.json(result.rows);
-    } catch (error) {
-        res.status(500).json({ error: 'Erro ao carregar lista de alunos' });
-    }
+  try {
+    const result = await pool.query('SELECT * FROM alunos ORDER BY id DESC');
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Erro ao buscar alunos:', err);
+    res.status(500).json({ error: 'Erro no banco de dados' });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
