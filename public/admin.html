@@ -19,7 +19,7 @@
 
     <div class="max-w-6xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-slate-200">
         
-        <!-- Cabeçalho do Painel Admin (visível na tela e na impressão) -->
+        <!-- Cabeçalho do Painel Admin -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-6 mb-6 gap-4">
             <div>
                 <div class="flex items-center gap-3 mb-1">
@@ -29,9 +29,9 @@
                 <p class="text-xs sm:text-sm text-slate-500">Curso: Atualizações do MROSC na Prática (8h) — Eco Cidade Soluções</p>
             </div>
             
-            <!-- Botão de Imprimir / Salvar PDF (Oculto na hora de imprimir) -->
+            <!-- Botão de Imprimir -->
             <button onclick="window.print()" class="print:hidden bg-[#0B3B36] hover:bg-opacity-90 text-white font-bold font-['Roboto'] px-5 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-sm cursor-pointer">
-                <span></span> Imprimir Relatório / PDF
+                <span>🖨️</span> Imprimir Relatório / PDF
             </button>
         </div>
 
@@ -50,7 +50,6 @@
                     </tr>
                 </thead>
                 <tbody id="tabela-alunos" class="divide-y divide-slate-200">
-                    <!-- Mensagem de carregamento inicial -->
                     <tr>
                         <td colspan="7" class="p-6 text-center text-slate-500">Carregando inscrições...</td>
                     </tr>
@@ -65,5 +64,76 @@
         </div>
 
     </div>
+
+    <!-- Script de Integração com o Backend -->
+    <script>
+        async function carregarAlunos() {
+            const tbody = document.getElementById('tabela-alunos');
+            const totalElement = document.getElementById('total-registros');
+
+            try {
+                const response = await fetch('/api/alunos');
+                if (!response.ok) throw new Error('Erro ao buscar inscritos');
+                
+                const alunos = await response.json();
+
+                if (alunos.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="p-6 text-center text-slate-500">Nenhuma inscrição registrada até o momento.</td>
+                        </tr>
+                    `;
+                    totalElement.textContent = 'Total de Inscritos: 0';
+                    return;
+                }
+
+                tbody.innerHTML = alunos.map(aluno => {
+                    const status = (aluno.status_pagamento || 'pendente').toLowerCase();
+                    const isAprovado = status === 'aprovado' || status === 'approved';
+                    
+                    const badgeClass = isAprovado
+                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                        : 'bg-amber-100 text-amber-800 border-amber-300';
+
+                    const statusTexto = isAprovado ? 'Aprovado' : 'Pendente';
+
+                    const dataFormatada = aluno.criado_em 
+                        ? new Date(aluno.criado_em).toLocaleString('pt-BR') 
+                        : '-';
+
+                    return `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-semibold text-slate-600">#${aluno.id}</td>
+                            <td class="p-3 text-slate-500">${dataFormatada}</td>
+                            <td class="p-3 font-bold text-slate-800">${aluno.nome || '-'}</td>
+                            <td class="p-3 text-slate-600">${aluno.cpf || '-'}</td>
+                            <td class="p-3 text-slate-600">${aluno.municipio || '-'}</td>
+                            <td class="p-3 text-slate-600">${aluno.instituicao || '-'} ${aluno.cargo ? `/ ${aluno.cargo}` : ''}</td>
+                            <td class="p-3">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded-full border ${badgeClass}">
+                                    ${statusTexto}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                totalElement.textContent = `Total de Inscritos: ${alunos.length}`;
+
+            } catch (error) {
+                console.error(error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="p-6 text-center text-rose-600 font-semibold">
+                            Erro ao carregar os dados. Verifique a conexão com a API.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Carrega os inscritos assim que a página abre
+        carregarAlunos();
+    </script>
 </body>
 </html>
