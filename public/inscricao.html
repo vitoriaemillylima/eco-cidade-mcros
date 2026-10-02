@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição - Eco Cidade Soluções</title>
+    <link rel="icon" href="./assets/images/logo.png">
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-['Lato'] flex flex-col min-h-screen antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-[#0B3B36] text-white py-8 px-6 text-center shadow-md">
+        <a href="index.html" class="inline-block mb-3 hover:opacity-90 transition">
+            <img src="assets/images/eco-cidade.png" alt="Logo Eco Cidade" class="h-20 sm:h-28 w-auto mx-auto object-contain" />
+        </a>
+        <h1 class="text-2xl sm:text-3xl font-black font-['Roboto'] text-[#8CC63F]">Inscrição no Curso</h1>
+        <p class="text-slate-200 text-xs sm:text-sm max-w-xl mx-auto mt-1">
+            Atualizações do Marco Regulatório das Organizações da Sociedade Civil (MROSC) na Gestão Ambiental — 8h (Teórico e Prático)
+        </p>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full space-y-6">
+
+        <!-- Ementa do curso-->
+        <section class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <details class="group cursor-pointer">
+                <summary class="flex items-center justify-between font-bold text-[#0B3B36] font-['Roboto'] text-base sm:text-lg select-none">
+                    <span class="flex items-center gap-2">
+                        <span></span> Clique para ver a Ementa do Curso
+                    </span>
+                    <span class="text-sm transition-transform duration-200 group-open:rotate-180">▼</span>
+                </summary>
+
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-3">
+                    <p><strong>Contexto Histórico e Fundamentos Constitucionais:</strong> Vantagens da adoção do modelo, conceitos básicos, princípios e objetivos da Lei nº 13.019/2014.</p>
+                    
+                    <div>
+                        <strong>Processo de Formalização da Parceria:</strong>
+                        <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-600">
+                            <li>Procedimento de Manifestação de Interesse</li>
+                            <li>Chamamento Público</li>
+                            <li>Plano de Trabalho e Celebração do Instrumento</li>
+                            <li>Termo de Colaboração, Termo de Fomento e Acordo de Cooperação</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <strong>Execução, Monitoramento e Controle:</strong>
+                        <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-600">
+                            <li>Obrigações e acompanhamento da execução</li>
+                            <li>Monitoramento e avaliação de resultados</li>
+                            <li>Prestação de contas e Sanções</li>
+                            <li>Entendimentos recentes dos Tribunais de Contas</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Oficina Prática:</strong> Jurisprudência Atualizada sobre MROSC e estudo de casos.</p>
+                </div>
+            </details>
+        </section>
+
+       <!-- Formulário de Inscrição -->
+<section class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md">
+    <h2 class="text-xl sm:text-2xl font-bold font-['Roboto'] text-[#0B3B36] mb-6 border-b border-slate-100 pb-3">
+        Informações para Inscrição
+    </h2>
+
+    <form id="form-inscricao" class="space-y-4">
+        <!-- Nome -->
+        <div>
+            <label for="nome" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Nome Completo *</label>
+            <input type="text" id="nome" required placeholder="Seu nome completo" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+        </div>
+
+        <!-- E-mail (NOVO CAMPO) -->
+        <div>
+            <label for="email" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">E-mail *</label>
+            <input type="email" id="email" required placeholder="seu.email@exemplo.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+        </div>
+
+        <!-- CPF e Município -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="cpf" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">CPF *</label>
+                <input type="text" id="cpf" required placeholder="000.000.000-00" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+            </div>
+
+            <div>
+                <label for="municipio" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Município *</label>
+                <input type="text" id="municipio" required placeholder="Sua cidade" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+            </div>
+        </div>
+
+        <!-- Endereço -->
+        <div>
+            <label for="endereco" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Endereço *</label>
+            <input type="text" id="endereco" required placeholder="Rua, número e bairro" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+        </div>
+
+        <!-- Instituição e Cargo -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="instituicao" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Instituição</label>
+                <input type="text" id="instituicao" placeholder="Prefeitura, OSC ou empresa" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+            </div>
+
+            <div>
+                <label for="cargo" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Profissão / Cargo</label>
+                <input type="text" id="cargo" placeholder="Seu cargo atual" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
+            </div>
+        </div>
+
+        <!-- Botão de Ação -->
+        <button type="button" id="btn-pagamento" class="w-full bg-[#8CC63F] hover:bg-opacity-90 text-slate-900 font-bold font-['Roboto'] py-3.5 rounded-xl shadow transition duration-200 mt-4 text-sm uppercase tracking-wider cursor-pointer">
+            Ir para Pagamento 
+        </button>
+    </form>
+</section>
+
+    </main>
+
+    <!-- Rodapé -->
+     <!-- Rodapé-->
+<footer class="bg-[#0B3B36] text-white py-8 px-6 mt-auto border-t-4 border-[#8CC63F]">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
+            <h3 class="text-xl font-black font-['Roboto'] text-[#8CC63F] uppercase tracking-wider">
+                SEJA ECO
+            </h3>
+
+            <div class="space-y-2.5 text-xs sm:text-sm font-medium text-slate-200">
+                <!-- Telefone / WhatsApp -->
+                <a href="https://api.whatsapp.com/send/?phone=558892543787" target="_blank" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.02-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    <span>(88) 9254-3787</span>
+                </a>
+
+                <!-- E-mail -->
+                <a href="mailto:ecocidade.ambiental@gmail.com" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span>ecocidade.ambiental@gmail.com</span>
+                </a>
+
+                <!-- Instagram Handle -->
+                <a href=" https://www.instagram.com/ecocidade.solucoes/" target="_blank" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span>@ecocidade.solucoes</span>
+                </a>
+
+                <!-- Endereço -->
+                <div class="flex items-center justify-center md:justify-start gap-3 text-slate-300">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Rua Pessoa Anta, 546, Centro - Uruoca - CE</span>
+                </div>
+
+            </div>
+        </div>
+
+   
+        <div class="flex flex-col items-center md:items-end gap-3 border-t md:border-t-0 border-slate-700/60 pt-4 md:pt-0 w-full md:w-auto">
+            
+            <p class="font-bold text-xs sm:text-sm text-[#8CC63F] text-center md:text-right">
+                Todos os direitos reservados &copy; 2026
+            </p>
+            
+            <div id="cabecalho" class="flex items-center gap-3">
+                <!-- Instagram -->
+                <a href=" https://www.instagram.com/ecocidade.solucoes/" target="_blank" title="Instagram" class="bg-[#8CC63F] p-2 rounded-full hover:opacity-80 transition">
+                    <svg class="w-5 h-5 text-[#0B3B36] fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href=" https://api.whatsapp.com/send/?phone=558892543787" target="_blank" title="WhatsApp" class="bg-[#8CC63F] p-2 rounded-full hover:opacity-80 transition">
+                    <svg class="w-5 h-5 text-[#0B3B36] fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+    <script src="/inscricao.js"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Cidade Soluções</title>
+    <link rel="icon" href="./assets/images/logo.png">
+    
+    <!-- Importação do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-['Lato'] flex flex-col min-h-screen antialiased">
+
+<!-- Navbar Fixa / Cabeçalho Verde Petróleo Ajustado -->
+<nav class="sticky top-0 z-50 bg-[#0B3B36] text-white shadow-lg backdrop-blur-md bg-opacity-95">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        
+        <!-- Logo no Canto Esquerdo (Aumentada sem esticar a barra) -->
+        <a href="#" class="flex items-center hover:opacity-90 transition h-full py-1">
+            <img src="assets/images/eco-cidade.png" alt="Logo Eco Cidade" class="h-12 sm:h-14 w-auto object-contain scale-125 origin-left" />
+        </a>
+
+        <!-- Menu de Navegação Adaptável para Mobile -->
+        <ul class="flex items-center gap-3 sm:gap-6 font-['Roboto'] font-medium text-xs sm:text-sm md:text-base">
+            <li>
+                <a href="#nos-conheca" class="hover:text-[#8CC63F] transition duration-200">Nos Conheça</a>
+            </li>
+            <li>
+                <a href="#pilares" class="hover:text-[#8CC63F] transition duration-200">Pilares</a>
+            </li>
+            <li>
+                <a href="#cursos" class="bg-[#8CC63F] text-slate-900 font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-opacity-90 transition duration-200">Curso</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    
+
+<!-- Topo-->
+<header id="nos-conheca" class="relative py-20 px-6 text-white text-center shadow-md overflow-hidden flex items-center justify-center min-h-[360px]">
+
+    <div class="absolute inset-0 bg-cover bg-center blur-sm scale-110 brightness-75 pointer-events-none" style="background-image: url('assets/images/bg.jpg');"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+
+        <div class="flex items-center justify-center mb-2">
+            <h1 class="text-2xl sm:text-4xl md:text-5xl font-black font-['Roboto'] tracking-tight text-white drop-shadow-lg">
+                Eco Cidade Soluções
+            </h1>
+            <span class="text-2xl sm:text-4xl md:text-5xl font-black text-[#8CC63F] animate-pulse ml-1">|</span>
+        </div>
+
+        <!-- Descrição menor sobre a consultoria -->
+        <p class="text-slate-100 text-xs sm:text-sm md:text-base font-light leading-relaxed max-w-lg mt-3 drop-shadow">
+            Somos uma consultoria ambiental especializada em soluções sustentáveis para o desenvolvimento de projetos que promovem o equilíbrio entre o ser humano e o meio ambiente.
+        </p>
+
+    </div>
+</header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-12 flex-grow space-y-16">
+        
+        <!-- Os 5 Cards dos Pilares -->
+        <section id="pilares" class="scroll-mt-24">
+            <h2 class="text-2xl md:text-3xl font-bold text-[#0B3B36] font-['Roboto'] text-center mb-8">Nossos Pilares</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-white/80 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl hover:shadow-black/30 active:scale-95 flex flex-col justify-between">
+                    <div>
+                        <a href="#">
+                            <img class="rounded-xl w-full h-48 object-cover mb-4" src="assets/images/paisagismo.jpeg" alt="Coleta Seletiva" />
+                        </a>
+                        <a href="#">
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-[#0B3B36] font-['Roboto']">1. Coleta Seletiva</h3>
+                        </a>
+                        <p class="mb-4 text-sm text-slate-700 leading-relaxed">
+                            Projetos de modernização e implementação de sistemas inteligentes porta a porta para municípios e condomínios.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-white/80 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl hover:shadow-black/30 active:scale-95 flex flex-col justify-between">
+                    <div>
+                        <a href="#">
+                            <img class="rounded-xl w-full h-48 object-cover mb-4" src="assets/images/coletaseletiva.jpeg" alt="Paisagismo Sustentável" />
+                        </a>
+                        <a href="#">
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-[#0B3B36] font-['Roboto']">2. Paisagismo Sustentável</h3>
+                        </a>
+                        <p class="mb-4 text-sm text-slate-700 leading-relaxed">
+                            Recuperação de áreas urbanas e criação de espaços verdes ecológicos e hortas comunitárias.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-white/80 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl hover:shadow-black/30 active:scale-95 flex flex-col justify-between">
+                    <div>
+                        <a href="#">
+                            <img class="rounded-xl w-full h-48 object-cover mb-4" src="assets/images/Isaque.JPG.jpeg" alt="Educação Ambiental" />
+                        </a>
+                        <a href="#">
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-[#0B3B36] font-['Roboto']">3. Educação Ambiental</h3>
+                        </a>
+                        <p class="mb-4 text-sm text-slate-700 leading-relaxed">
+                            Capacitações, oficinas comunitárias e programas pedagógicos nas redes de ensino.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-white/80 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl hover:shadow-black/30 active:scale-95 flex flex-col justify-between md:col-span-1 md:col-start-1">
+                    <div>
+                        <a href="#">
+                            <img class="rounded-xl w-full h-48 object-cover mb-4" src="assets/images/imagem04.jpg" alt="Regularização Ambiental" />
+                        </a>
+                        <a href="#">
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-[#0B3B36] font-['Roboto']">4. Regularização Ambiental</h3>
+                        </a>
+                        <p class="mb-4 text-sm text-slate-700 leading-relaxed">
+                            Licenciamento e assessoria em conformidade técnica para órgãos públicos e empreendimentos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-white/80 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl hover:shadow-black/30 active:scale-95 flex flex-col justify-between md:col-span-2">
+                    <div>
+                        <a href="#">
+                            <img class="rounded-xl w-full h-52 object-cover mb-4" src="assets/images/imagem3.jpeg" alt="Gestão de Resíduos" />
+                        </a>
+                        <a href="#">
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-[#0B3B36] font-['Roboto']">5. Gestão de Resíduos</h3>
+                        </a>
+                        <p class="mb-4 text-sm text-slate-700 leading-relaxed">
+                            Desenvolvimento de planos municipais e consultoria especializada em saneamento ambiental e reciclagem.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Chamada do Curso MROSC -->
+        <section id="cursos" class="scroll-mt-24 bg-[#0B3B36] text-white p-6 sm:p-8 rounded-2xl shadow-lg text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="bg-[#8CC63F] text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Capacitação </span>
+                <h2 class="text-2xl font-bold font-['Roboto'] mt-2">Curso: MROSC na gestão ambiental</h2>
+                <p class="text-slate-200 text-sm mt-1">Marco Regulatório das Organizações da Sociedade Civil aplicadas à gestão ambiental.</p>
+            </div>
+            <a href="inscricao.html" class="bg-[#8CC63F] hover:opacity-90 text-slate-900 font-bold px-6 py-3 rounded-xl shadow transition whitespace-nowrap">
+                Fazer Inscrição 
+            </a>
+        </section>
+
+        <!-- Parcerias -->
+        <section class="text-center py-10 border-t border-slate-200">
+            <h2 class="text-2xl font-bold text-[#0B3B36] font-['Roboto'] mb-8">Parcerias e Realizações</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 items-center justify-items-center max-w-4xl mx-auto px-2 sm:px-4">
+                <div class="p-3 rounded-xl bg-white/40 backdrop-blur-sm border border-slate-100 shadow-sm w-full flex justify-center items-center h-28 hover:shadow-md transition duration-300">
+                    <img src="assets/images/uruoca.jpg" alt="Prefeitura de Uruoca" class="h-20 md:h-24 max-w-full object-contain grayscale hover:grayscale-0 transition duration-300" />
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/40 backdrop-blur-sm border border-slate-100 shadow-sm w-full flex justify-center items-center h-28 hover:shadow-md transition duration-300">
+                    <img src="assets/images/senador.jpg" alt="Prefeitura de Senador Sá" class="h-20 md:h-24 max-w-full object-contain grayscale hover:grayscale-0 transition duration-300" />
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/40 backdrop-blur-sm border border-slate-100 shadow-sm w-full flex justify-center items-center h-28 hover:shadow-md transition duration-300">
+                    <img src="assets/images/meruoca.jpg" alt="Prefeitura de Meruoca" class="h-20 md:h-24 max-w-full object-contain grayscale hover:grayscale-0 transition duration-300" />
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/40 backdrop-blur-sm border border-slate-100 shadow-sm w-full flex justify-center items-center h-28 hover:shadow-md transition duration-300">
+                    <img src="assets/images/martinopole.png" alt="Prefeitura de Martinópole" class="h-20 md:h-24 max-w-full object-contain grayscale hover:grayscale-0 transition duration-300" />
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé-->
+<footer class="bg-[#0B3B36] text-white py-8 px-6 mt-auto border-t-4 border-[#8CC63F]">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
+            <h3 class="text-xl font-black font-['Roboto'] text-[#8CC63F] uppercase tracking-wider">
+                SEJA ECO
+            </h3>
+
+            <div class="space-y-2.5 text-xs sm:text-sm font-medium text-slate-200">
+                <!-- Telefone / WhatsApp -->
+                <a href="https://api.whatsapp.com/send/?phone=558892543787" target="_blank" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.02-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    <span>(88) 9254-3787</span>
+                </a>
+
+                <!-- E-mail -->
+                <a href="mailto:ecocidade.ambiental@gmail.com" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span>ecocidade.ambiental@gmail.com</span>
+                </a>
+
+                <!-- Instagram Handle -->
+                <a href=" https://www.instagram.com/ecocidade.solucoes/" target="_blank" class="flex items-center justify-center md:justify-start gap-3 hover:text-[#8CC63F] transition group">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span>@ecocidade.solucoes</span>
+                </a>
+
+                <!-- Endereço -->
+                <div class="flex items-center justify-center md:justify-start gap-3 text-slate-300">
+                    <svg class="w-4 h-4 text-[#8CC63F] fill-current shrink-0" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Rua Pessoa Anta, 546, Centro - Uruoca - CE</span>
+                </div>
+
+            </div>
+        </div>
+
+   
+        <div class="flex flex-col items-center md:items-end gap-3 border-t md:border-t-0 border-slate-700/60 pt-4 md:pt-0 w-full md:w-auto">
+            
+            <p class="font-bold text-xs sm:text-sm text-[#8CC63F] text-center md:text-right">
+                Todos os direitos reservados &copy; 2026
+            </p>
+            
+            <div id="cabecalho" class="flex items-center gap-3">
+                <!-- Instagram -->
+                <a href=" https://www.instagram.com/ecocidade.solucoes/" target="_blank" title="Instagram" class="bg-[#8CC63F] p-2 rounded-full hover:opacity-80 transition">
+                    <svg class="w-5 h-5 text-[#0B3B36] fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href=" https://api.whatsapp.com/send/?phone=558892543787" target="_blank" title="WhatsApp" class="bg-[#8CC63F] p-2 rounded-full hover:opacity-80 transition">
+                    <svg class="w-5 h-5 text-[#0B3B36] fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+  
+</body>
+</html>
