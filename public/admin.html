@@ -6,7 +6,7 @@
     <title>Painel Administrativo - Eco Cidade Soluções</title>
     <link rel="icon" href="./assets/images/logo.png">
     
-    <!-- Importação do Google Fonts (Roboto + Lato) -->
+    <!-- Importação do Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
@@ -65,7 +65,7 @@
 
     </div>
 
-    <!-- Script de Integração com o Backend -->
+    <!-- Script de Renderização -->
     <script>
         async function carregarAlunos() {
             const tbody = document.getElementById('tabela-alunos');
@@ -77,7 +77,7 @@
                 
                 const alunos = await response.json();
 
-                if (alunos.length === 0) {
+                if (!Array.isArray(alunos) || alunos.length === 0) {
                     tbody.innerHTML = `
                         <tr>
                             <td colspan="7" class="p-6 text-center text-slate-500">Nenhuma inscrição registrada até o momento.</td>
@@ -97,8 +97,10 @@
 
                     const statusTexto = isAprovado ? 'Aprovado' : 'Pendente';
 
-                    const dataFormatada = aluno.criado_em 
-                        ? new Date(aluno.criado_em).toLocaleString('pt-BR') 
+                    // Suporta tanto data_inscricao quanto criado_em
+                    const campoData = aluno.data_inscricao || aluno.criado_em;
+                    const dataFormatada = campoData 
+                        ? new Date(campoData).toLocaleString('pt-BR') 
                         : '-';
 
                     return `
@@ -132,7 +134,6 @@
             }
         }
 
-        // Carrega os inscritos assim que a página abre
         carregarAlunos();
     </script>
 </body>
