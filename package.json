@@ -1,0 +1,23 @@
+{
+  "name": "curso-mrosc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "mercadopago": "^3.6.1",
+    "nodemailer": "^9.1.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.3.3"
+  }
+}
