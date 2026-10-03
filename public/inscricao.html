@@ -119,7 +119,20 @@
                 <input type="text" id="cargo" placeholder="Seu cargo atual" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm">
             </div>
         </div>
-
+        <!-- Seletor de Quantidade e Desconto Progressivo -->
+<div class="mb-5">
+    <label for="quantidade" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">Quantidade de Inscrições / Vagas *</label>
+    <select id="quantidade" name="quantidade" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0B3B36] text-sm bg-white">
+        <option value="1">1 Inscrição (R$ 900,00)</option>
+        <option value="10">10 Inscrições - R$ 800,00 (Pacote Grupo)</option>
+        <option value="20">20 Inscrições - R$ 700,00 (Pacote Turma)</option>
+        <option value="25">25 Inscrições - R$ 650,00 (Pacote Master)</option>
+    </select>
+    
+    <p class="text-xs text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200 mt-2 leading-relaxed">
+        💡 <strong>Compras em conjunto / lote:</strong> O responsável faz o pagamento do pacote com desconto aqui. Após a aprovação, basta enviar a lista com os nomes e dados dos demais participantes diretamente para o nosso <strong>WhatsApp</strong> (disponível no rodapé da página).
+    </p>
+</div>
         <!-- Botão de Ação -->
        <button type="submit" id="btn-pagamento" class="w-full bg-[#8CC63F] hover:bg-opacity-90 text-slate-900 font-bold font-['Roboto'] py-3.5 rounded-xl shadow transition duration-200 mt-4 text-sm uppercase tracking-wider cursor-pointer">
     Ir para Pagamento 
