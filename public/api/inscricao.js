@@ -19,22 +19,22 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' });
   }
 
-  // 1. Define o VALOR TOTAL do pacote fechado que você determinou
-  let valorTotal = 90.00 * quantidade; // Padrão individual (R$ 90 cada)
-
+  // Regra de preço dos pacotes fechados
+  let valorTotal = 900.00 * quantidade;
   if (quantidade > 20) {
-      valorTotal = 650.00; // Pacote fechado para +20
+      valorTotal = 650.00; // Pacote +20
   } else if (quantidade === 20) {
-      valorTotal = 700.00; // Pacote fechado para 20
+      valorTotal = 700.00; // Pacote 20
   } else if (quantidade >= 10) {
-      valorTotal = 800.00; // Pacote fechado para 10 (10 a 19)
+      valorTotal = 800.00; // Pacote 10
+  } else {
+      valorTotal = 900.00 * quantidade;
   }
 
-  // 2. Calcula o preço unitário proporcional para o Mercado Pago multiplicar quantidade x unit_price perfeitamente
   const precoUnitarioProporcional = valorTotal / quantidade;
 
   try {
-    // Salva o aluno, a quantidade e o valor total no Neon DB
+    // Salva no Neon DB e pega o ID
     const query = `
       INSERT INTO alunos (nome, cpf, endereco, municipio, instituicao, cargo, email, quantidade, valor_total, status_pagamento, data_inscricao)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pendente', NOW())
@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     const dbResult = await pool.query(query, values);
     const alunoId = dbResult.rows[0].id;
 
-    // Gera o checkout no Mercado Pago com a quantity real e o unit_price proporcional
+    // Gera o checkout no Mercado Pago
     const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
       headers: {
@@ -65,8 +65,8 @@ module.exports = async (req, res) => {
       body: JSON.stringify({
         items: [{ 
           title: `Inscrição Curso MROSC (${quantidade} vaga(s))`, 
-          unit_price: parseFloat(precoUnitarioProporcional.toFixed(2)), // Preço unitário proporcional
-          quantity: quantidade, // Quantidade exata de alunos selecionada
+          unit_price: parseFloat(precoUnitarioProporcional.toFixed(2)), 
+          quantity: quantidade, 
           currency_id: 'BRL' 
         }],
         payer: { name: nome, email: email, identification: { type: 'CPF', number: cpf?.replace(/\D/g, '') } },
@@ -83,12 +83,12 @@ module.exports = async (req, res) => {
 
     const mpData = await mpResponse.json();
     if (!mpResponse.ok) {
-      throw new Error(mpData.message || 'Erro ao gerar checkout no Mercado Pago');
+      throw new Error(mpData.message || 'Erro ao gerar checkout');
     }
 
     return res.status(200).json({ success: true, checkoutUrl: mpData.init_point });
   } catch (err) {
-    console.error('Erro na API de Inscrição:', err);
+    console.error('Erro:', err);
     return res.status(500).json({ error: 'Erro ao gerar pagamento', detalhe: err.message });
   }
 };
