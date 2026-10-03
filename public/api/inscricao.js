@@ -19,21 +19,22 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' });
   }
 
-  // Regra estrita: 1 individual ou os pacotes fechados exatos
   let valorTotal = 900.00;
 
   if (quantidade > 20) {
-      valorTotal = 650.00; // Pacote Master (>20)
+      valorTotal = 650.00;
   } else if (quantidade === 20) {
-      valorTotal = 700.00; // Pacote Turma (20)
+      valorTotal = 700.00;
   } else if (quantidade >= 10) {
-      valorTotal = 800.00; // Pacote Grupo (10)
+      valorTotal = 800.00;
   } else {
-      valorTotal = 900.00; // 1 Inscrição Individual
+      valorTotal = 900.00;
   }
 
+  // 👇 ISSO VAI APARECER NOS LOGS DO VERCEL PARA PROVAR QUE ATUALIZOU!
+  console.log("🚨 DEU BOM? QUANTIDADE:", quantidade, " | VALOR TOTAL CALCULADO:", valorTotal);
+
   try {
-    // Salva no Neon DB
     const query = `
       INSERT INTO alunos (nome, cpf, endereco, municipio, instituicao, cargo, email, quantidade, valor_total, status_pagamento, data_inscricao)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pendente', NOW())
@@ -54,7 +55,6 @@ module.exports = async (req, res) => {
     const dbResult = await pool.query(query, values);
     const alunoId = dbResult.rows[0].id;
 
-    // Envia para o Mercado Pago o valor fechado exato
     const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
       headers: {
@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
         items: [{ 
           title: `Inscrição Curso MROSC (${quantidade} vaga(s) - Pacote Fechado)`, 
           unit_price: valorTotal, 
-          quantity: 1, // 1 único item cobrando o valor fechado do pacote
+          quantity: 1, 
           currency_id: 'BRL' 
         }],
         payer: { name: nome, email: email, identification: { type: 'CPF', number: cpf?.replace(/\D/g, '') } },
