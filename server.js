@@ -89,6 +89,18 @@ app.post('/api/webhook', async (req, res) => {
 });
 
 // Entrega as páginas do site
-app.use((req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+// Fallback universal para páginas estáticas (APENAS SE NÃO FOR API)
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Rota de API não encontrada' });
+  }
+  
+  const filePath = path.join(__dirname, 'public', req.path);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
+  });
+});
 
 module.exports = app;
