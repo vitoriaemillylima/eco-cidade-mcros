@@ -1,80 +1,93 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const formInscricao = document.getElementById('form-inscricao');
-    if (formInscricao) {
-        formInscricao.addEventListener('submit', processarInscricao);
-    }
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL,
+  ssl: { rejectUnauthorized: false },
+  max: 5
 });
 
-async function processarInscricao(e) {
-    e.preventDefault();
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Método não permitido' });
+  }
 
-    const btnSubmit = document.getElementById('btn-pagamento');
-    const textoOriginal = btnSubmit ? btnSubmit.innerHTML : 'Ir para Pagamento';
+  const { nome, email, cpf, endereco, municipio, instituicao, cargo, quantidade: qtdInput } = req.body;
+  const quantidade = parseInt(qtdInput) || 1;
+  const mpToken = process.env.MP_ACCESS_TOKEN;
 
-    const nome = document.getElementById('nome')?.value.trim();
-    const email = document.getElementById('email')?.value.trim();
-    const cpf = document.getElementById('cpf')?.value.trim();
-    const endereco = document.getElementById('endereco')?.value.trim();
-    const municipio = document.getElementById('municipio')?.value.trim();
-    const instituicao = document.getElementById('instituicao')?.value.trim() || '';
-    const cargo = document.getElementById('cargo')?.value.trim() || '';
+  if (!mpToken) {
+    return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' });
+  }
+
+  // Regra estrita: 1 individual ou os pacotes fechados exatos
+  let valorTotal = 900.00;
+
+  if (quantidade > 20) {
+      valorTotal = 650.00; // Pacote Master (>20)
+  } else if (quantidade === 20) {
+      valorTotal = 700.00; // Pacote Turma (20)
+  } else if (quantidade >= 10) {
+      valorTotal = 800.00; // Pacote Grupo (10)
+  } else {
+      valorTotal = 900.00; // 1 Inscrição Individual
+  }
+
+  try {
+    // Salva no Neon DB
+    const query = `
+      INSERT INTO alunos (nome, cpf, endereco, municipio, instituicao, cargo, email, quantidade, valor_total, status_pagamento, data_inscricao)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pendente', NOW())
+      RETURNING id;
+    `;
+    const values = [
+      nome, 
+      cpf?.replace(/\D/g, ''), 
+      endereco, 
+      municipio, 
+      instituicao, 
+      cargo, 
+      email?.toLowerCase(), 
+      quantidade, 
+      valorTotal
+    ];
     
-    // Pega a quantidade selecionada no <select> do HTML
-    const quantidade = document.getElementById('quantidade')?.value || 1;
+    const dbResult = await pool.query(query, values);
+    const alunoId = dbResult.rows[0].id;
 
-    if (!nome || !email || !cpf || !endereco || !municipio) {
-        alert('Preencha todos os campos obrigatórios (*).');
-        return;
+    // Envia para o Mercado Pago o valor fechado exato
+    const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${mpToken}`
+      },
+      body: JSON.stringify({
+        items: [{ 
+          title: `Inscrição Curso MROSC (${quantidade} vaga(s) - Pacote Fechado)`, 
+          unit_price: valorTotal, 
+          quantity: 1, // 1 único item cobrando o valor fechado do pacote
+          currency_id: 'BRL' 
+        }],
+        payer: { name: nome, email: email, identification: { type: 'CPF', number: cpf?.replace(/\D/g, '') } },
+        external_reference: alunoId.toString(),
+        back_urls: {
+          success: 'https://eco-cidade-mcros.vercel.app/inscricao.html?status=sucesso',
+          failure: 'https://eco-cidade-mcros.vercel.app/inscricao.html?status=erro',
+          pending: 'https://eco-cidade-mcros.vercel.app/inscricao.html?status=pendente'
+        },
+        auto_return: 'approved',
+        notification_url: 'https://eco-cidade-mcros.vercel.app/api/webhook'
+      })
+    });
+
+    const mpData = await mpResponse.json();
+    if (!mpResponse.ok) {
+      throw new Error(mpData.message || 'Erro ao gerar checkout');
     }
 
-    const cpfLimpo = cpf.replace(/\D/g, '');
-    if (cpfLimpo.length !== 11) {
-        alert('Informe um CPF válido com 11 dígitos.');
-        return;
-    }
-
-    try {
-        if (btnSubmit) {
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = 'Gerando Pagamento... ⏳';
-            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
-        }
-
-        const response = await fetch('/api/inscricao', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                nome, 
-                email, 
-                cpf: cpfLimpo, 
-                endereco, 
-                municipio, 
-                instituicao, 
-                cargo, 
-                quantidade 
-            })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Erro ao gerar pagamento.');
-        }
-
-        if (data.checkoutUrl) {
-            window.location.href = data.checkoutUrl;
-        } else {
-            throw new Error('O servidor não retornou o link.');
-        }
-
-    } catch (error) {
-        console.error('Erro:', error);
-        alert(`Erro: ${error.message}`);
-
-        if (btnSubmit) {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = textoOriginal;
-            btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
-        }
-    }
-}
+    return res.status(200).json({ success: true, checkoutUrl: mpData.init_point });
+  } catch (err) {
+    console.error('Erro na API:', err);
+    return res.status(500).json({ error: 'Erro ao gerar pagamento', detalhe: err.message });
+  }
+};
