@@ -19,22 +19,21 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' });
   }
 
-  // Regra de preço dos pacotes fechados
-  let valorTotal = 900.00 * quantidade;
+  // Regra estrita: 1 individual ou os pacotes fechados exatos
+  let valorTotal = 900.00;
+
   if (quantidade > 20) {
-      valorTotal = 650.00; // Pacote +20
+      valorTotal = 650.00; // Pacote Master (>20)
   } else if (quantidade === 20) {
-      valorTotal = 700.00; // Pacote 20
+      valorTotal = 700.00; // Pacote Turma (20)
   } else if (quantidade >= 10) {
-      valorTotal = 800.00; // Pacote 10
+      valorTotal = 800.00; // Pacote Grupo (10)
   } else {
-      valorTotal = 900.00 * quantidade;
+      valorTotal = 900.00; // 1 Inscrição Individual
   }
 
-  const precoUnitarioProporcional = valorTotal / quantidade;
-
   try {
-    // Salva no Neon DB e pega o ID
+    // Salva no Neon DB
     const query = `
       INSERT INTO alunos (nome, cpf, endereco, municipio, instituicao, cargo, email, quantidade, valor_total, status_pagamento, data_inscricao)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pendente', NOW())
@@ -55,7 +54,7 @@ module.exports = async (req, res) => {
     const dbResult = await pool.query(query, values);
     const alunoId = dbResult.rows[0].id;
 
-    // Gera o checkout no Mercado Pago
+    // Envia para o Mercado Pago o valor fechado exato
     const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
       headers: {
@@ -64,9 +63,9 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         items: [{ 
-          title: `Inscrição Curso MROSC (${quantidade} vaga(s))`, 
-          unit_price: parseFloat(precoUnitarioProporcional.toFixed(2)), 
-          quantity: quantidade, 
+          title: `Inscrição Curso MROSC (${quantidade} vaga(s) - Pacote Fechado)`, 
+          unit_price: valorTotal, 
+          quantity: 1, // 1 único item cobrando o valor fechado do pacote
           currency_id: 'BRL' 
         }],
         payer: { name: nome, email: email, identification: { type: 'CPF', number: cpf?.replace(/\D/g, '') } },
@@ -88,7 +87,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ success: true, checkoutUrl: mpData.init_point });
   } catch (err) {
-    console.error('Erro:', err);
+    console.error('Erro na API:', err);
     return res.status(500).json({ error: 'Erro ao gerar pagamento', detalhe: err.message });
   }
 };
