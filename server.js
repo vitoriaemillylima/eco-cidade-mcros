@@ -40,7 +40,7 @@ app.post('/api/inscrever', async (req, res) => {
   const { nome, cpf, endereco, municipio, instituicao, cargo, email } = req.body;
 
   if (!pool) {
-    return res.status(500).json({ error: 'DATABASE_URL não configurada' });
+    return res.status(500).json({ error: 'DATABASE_URL não configurada no servidor' });
   }
 
   try {
@@ -67,7 +67,71 @@ app.post('/api/inscrever', async (req, res) => {
   }
 });
 
-// 3. Rota do Painel Admin
+// 3. Rota de Criar Pagamento no Mercado Pago (Pix / Checkout)
+app.post('/api/criar-pagamento', async (req, res) => {
+  const mpToken = process.env.MP_ACCESS_TOKEN;
+
+  if (!mpToken) {
+    return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado nas variáveis de ambiente' });
+  }
+
+  const { email, nome, valor, descricao, cpf } = req.body;
+
+  try {
+    // Chamada oficial para a API do Mercado Pago (Criação de Preferência / Pagamento)
+    const preferenceData = {
+      items: [
+        {
+          title: descricao || 'Inscrição Evento Eco Cidade',
+          unit_price: Number(valor) || 50.00,
+          quantity: 1,
+          currency_id: 'BRL'
+        }
+      ],
+      payer: {
+        name: nome,
+        email: email,
+        identification: cpf ? { type: 'CPF', number: cpf.replace(/\D/g, '') } : undefined
+      },
+      back_urls: {
+        success: 'https://eco-cidade-mcros.vercel.app/sucesso.html',
+        failure: 'https://eco-cidade-mcros.vercel.app/erro.html',
+        pending: 'https://eco-cidade-mcros.vercel.app/pendente.html'
+      },
+      auto_return: 'approved',
+      notification_url: 'https://eco-cidade-mcros.vercel.app/api/webhook'
+    };
+
+    const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${mpToken}`
+      },
+      body: JSON.stringify(preferenceData)
+    });
+
+    const data = await mpResponse.json();
+
+    if (!mpResponse.ok) {
+      console.error('Erro Mercado Pago API:', data);
+      return res.status(500).json({ error: 'Falha ao gerar pagamento no Mercado Pago', details: data });
+    }
+
+    // Retorna o link para abrir a tela de pagamento
+    res.status(200).json({
+      init_point: data.init_point,
+      sandbox_init_point: data.sandbox_init_point,
+      id: data.id
+    });
+
+  } catch (err) {
+    console.error('Erro ao criar pagamento:', err.message);
+    res.status(500).json({ error: 'Erro interno ao processar pagamento' });
+  }
+});
+
+// 4. Rota do Painel Admin
 app.get('/api/alunos', async (req, res) => {
   if (!pool) {
     return res.status(500).json({ error: 'DATABASE_URL não configurada' });
@@ -83,7 +147,7 @@ app.get('/api/alunos', async (req, res) => {
   }
 });
 
-// 4. Webhook do Mercado Pago (com verificação nativa da API)
+// 5. Webhook do Mercado Pago (Notificação automática de pagamento aprovado)
 app.post('/api/webhook', async (req, res) => {
   try {
     const { type, data, action } = req.body;
@@ -91,42 +155,31 @@ app.post('/api/webhook', async (req, res) => {
 
     if (paymentId && (type === 'payment' || (action && action.includes('payment')))) {
       const mpToken = process.env.MP_ACCESS_TOKEN;
+
       if (mpToken && pool) {
-        // Usa https nativo para evitar bugs do fetch no serverless
-        const https = require('https');
-        const options = {
-          hostname: 'api.mercadopago.com',
-          path: `/v1/payments/${paymentId}`,
+        const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${mpToken}`
           }
-        };
-
-        const mpReq = https.request(options, (mpRes) => {
-          let body = '';
-          mpRes.on('data', chunk => body += chunk);
-          mpRes.on('end', async () => {
-            if (mpRes.statusCode === 200) {
-              const paymentData = JSON.parse(body);
-              if (paymentData.status === 'approved') {
-                const emailAluno = paymentData.payer?.email?.toLowerCase();
-                const cpfAluno = paymentData.payer?.identification?.number?.replace(/\D/g, '');
-
-                await pool.query(
-                  `UPDATE alunos 
-                   SET status_pagamento = 'aprovado' 
-                   WHERE LOWER(email) = LOWER($1) 
-                      OR REPLACE(REPLACE(cpf, '.', ''), '-', '') = $2`,
-                  [emailAluno, cpfAluno]
-                );
-              }
-            }
-          });
         });
 
-        mpReq.on('error', (e) => console.error('Erro na chamada MP:', e));
-        mpReq.end();
+        if (response.ok) {
+          const paymentData = await response.json();
+          if (paymentData.status === 'approved') {
+            const emailAluno = paymentData.payer?.email?.toLowerCase();
+            const cpfAluno = paymentData.payer?.identification?.number?.replace(/\D/g, '');
+
+            await pool.query(
+              `UPDATE alunos 
+               SET status_pagamento = 'aprovado' 
+               WHERE LOWER(email) = LOWER($1) 
+                  OR REPLACE(REPLACE(cpf, '.', ''), '-', '') = $2`,
+              [emailAluno, cpfAluno]
+            );
+            console.log(`[Webhook] Pagamento ${paymentId} aprovado com sucesso!`);
+          }
+        }
       }
     }
     res.status(200).send('OK');
@@ -136,7 +189,7 @@ app.post('/api/webhook', async (req, res) => {
   }
 });
 
-// Fallback universal para páginas estáticas e HTML
+// Fallback universal para arquivos da pasta 'public'
 app.use((req, res) => {
   const filePath = path.join(__dirname, 'public', req.path);
   res.sendFile(filePath, (err) => {
