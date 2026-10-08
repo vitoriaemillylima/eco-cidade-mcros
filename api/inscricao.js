@@ -20,19 +20,17 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'MP_ACCESS_TOKEN não configurado' });
   }
 
-  // Regra de preço fixa dos pacotes
-  let valorTotal = 90.00;
+let valorTotal = 0;
 
-  if (quantidade > 20) {
-      valorTotal = 650.00; // Pacote Master (>20)
-  } else if (quantidade === 20) {
-      valorTotal = 700.00; // Pacote Turma (20)
-  } else if (quantidade >= 10) {
-      valorTotal = 800.00; // Pacote Grupo (10)
-  } else {
-      valorTotal = 90.00; // Individual (1)
-  }
-
+if (quantidade > 20) {
+    valorTotal = 16250.00; // Pacote Master (> 20)
+} else if (quantidade === 20) {
+    valorTotal = 14000.00; // Pacote Turma (20 alunos = R$ 700/aluno)
+} else if (quantidade >= 10) {
+    valorTotal = 8000.00;  // Pacote Grupo (10 a 19 alunos)
+} else {
+    valorTotal = 900.00;   // Individual (1 a 9 alunos)
+}
   try {
     // Salva no banco incluindo a quantidade e o valor total
     const query = `
